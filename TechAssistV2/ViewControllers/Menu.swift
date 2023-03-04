@@ -11,6 +11,7 @@ class Menu:UIViewController{
     
     let lblTitle = UILabel()
     var dbm = DBManager(mydb: "")
+    var aDBM = DBManager(mydb: "")
     
     
     override func viewDidLoad() {
@@ -18,6 +19,7 @@ class Menu:UIViewController{
         view.backgroundColor = UIColor.white
         self.navigationController?.navigationBar.backgroundColor = UIColor.lightGray
         self.navigationController?.navigationBar.tintColor = UIColor.blue
+       
         
         
         setupUI()

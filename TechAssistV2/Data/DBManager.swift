@@ -35,19 +35,27 @@ class DBManager{
     
     init(mydb:String){
         
-        //start
+        do{
+            self.mydb = DBManager.databaseURL.absoluteString
+            
+            db = try Connection(mydb)
+            
+        }
+        catch{
+            print("error with db connection on initilization")
+        }
+        var myPathString:String = String(self.mydb.dropFirst(7))
+        print("here's my string path: \(myPathString)")
         
-       
         
+      
+
         
-        //end
-        
-        
-        self.mydb = DBManager.databaseURL.absoluteString
-        db = try Connection(mydb)
-       
-        
-       
+        if (!FileManager.default.fileExists(atPath: String(myPathString)))
+        {
+            print(self.mydb)
+            setupDB()
+        }
        
     }
     
