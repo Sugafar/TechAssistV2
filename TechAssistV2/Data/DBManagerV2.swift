@@ -47,7 +47,7 @@ class DBManagerV2{
                 
                 print("thinks it does not exist")
                 db = try Connection(fileURL!.path)
-               // try db.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)")
+              
                 setupDB()
                 // create a new "users" table in the database
             } catch {

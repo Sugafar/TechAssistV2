@@ -10,6 +10,9 @@ import UIKit
 class Menu:UIViewController{
     
     let lblTitle = UILabel()
+    let btnTime = UIButton()
+    let btnProving = UIButton()
+    let btnAPI = UIButton()
     var dbm = DBManagerV2(mydb: "")
    // var aDBM = DBManager(mydb: "")
     
@@ -19,7 +22,7 @@ class Menu:UIViewController{
         view.backgroundColor = UIColor.white
         self.navigationController?.navigationBar.backgroundColor = UIColor.lightGray
         self.navigationController?.navigationBar.tintColor = UIColor.blue
-       
+        navigationItem.hidesBackButton = true
         
         
         setupUI()
@@ -30,7 +33,7 @@ class Menu:UIViewController{
         
         var myUser = DCUser()
         myUser = dbm.readRecord()
-        lblTitle.text = myUser.displayName
+        lblTitle.text = "Logged in as " + myUser.displayName
         
         
         
@@ -90,7 +93,7 @@ class Menu:UIViewController{
         lblTitle.text = "Menu"
         lblTitle.textColor = UIColor.black
        // lblTitle.font = .systemFont(ofSize: 20)
-        lblTitle.font = .systemFont(ofSize: 26, weight: .medium)
+        lblTitle.font = .systemFont(ofSize: 18, weight: .medium)
         
         view.addSubview(lblTitle)
         
@@ -102,7 +105,102 @@ class Menu:UIViewController{
         ])
         //end of lable
         
+        //Begin Time Btn
+      
+            
+                view.addSubview(btnTime)
+                
+              
+               // btnTime.backgroundColor = .systemGreen
+                btnTime.titleLabel?.textColor = UIColor.black
+                //scanButton.titleLabel?.text = "Scan for PPC"
+                btnTime.setTitle("Enter Time", for: .normal)
+               
+                
+                btnTime.translatesAutoresizingMaskIntoConstraints = false
+                
+                btnTime.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
+                btnTime.topAnchor.constraint(equalTo:lblTitle.bottomAnchor,constant: 45).isActive = true
+                btnTime.widthAnchor.constraint(equalToConstant: 200).isActive = true
+                btnTime.heightAnchor.constraint(equalToConstant: 50).isActive = true
+               // btnTime.addTarget(self,action: #selector(addDBRecord),for:.touchUpInside)
+                btnTime.layer.cornerRadius = 5
+                btnTime.layer.masksToBounds = true
+                btnTime.setTitleColor(UIColor.white, for: .normal)
+                btnTime.setTitleColor(UIColor.systemBlue, for: .selected)
+                btnTime.isEnabled = true
+                
+                _ = UIButton(type: .system)
+                if let hs1Color = UIColor(hex: "#198754") {
+                    btnTime.backgroundColor = hs1Color
+                }
+               
+        //End time Button
         
+        //Begin Proving button
+             
+                   
+                       view.addSubview(btnProving)
+                       
+                     
+                      // btnProving.backgroundColor = .systemGreen
+                       btnProving.titleLabel?.textColor = UIColor.black
+                       //scanButton.titleLabel?.text = "Scan for PPC"
+                       btnProving.setTitle("Proving Example", for: .normal)
+                      
+                       
+                       btnProving.translatesAutoresizingMaskIntoConstraints = false
+                       
+                       btnProving.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
+                       btnProving.topAnchor.constraint(equalTo:btnTime.bottomAnchor,constant: 45).isActive = true
+                       btnProving.widthAnchor.constraint(equalToConstant: 200).isActive = true
+                       btnProving.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                      // btnProving.addTarget(self,action: #selector(modRecord),for:.touchUpInside)
+                       btnProving.layer.cornerRadius = 5
+                       btnProving.layer.masksToBounds = true
+                       btnProving.setTitleColor(UIColor.white, for: .normal)
+                       btnProving.setTitleColor(UIColor.systemBlue, for: .selected)
+                       btnProving.isEnabled = true
+                       
+                       _ = UIButton(type: .system)
+                       if let hs1Color = UIColor(hex: "#198754") {
+                           btnProving.backgroundColor = hs1Color
+                       }
+                      
+        //End proving Button
+        
+        //Begin API button
+            
+                view.addSubview(btnAPI)
+                
+              
+               // btnAPI.backgroundColor = .systemGreen
+                btnAPI.titleLabel?.textColor = UIColor.black
+                //scanButton.titleLabel?.text = "Scan for PPC"
+                btnAPI.setTitle("Gravity Helper", for: .normal)
+               
+                
+                btnAPI.translatesAutoresizingMaskIntoConstraints = false
+                
+                btnAPI.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
+                btnAPI.topAnchor.constraint(equalTo:btnProving.bottomAnchor,constant: 45).isActive = true
+                btnAPI.widthAnchor.constraint(equalToConstant: 200).isActive = true
+                btnAPI.heightAnchor.constraint(equalToConstant: 50).isActive = true
+              //  btnAPI.addTarget(self,action: #selector(readRecord),for:.touchUpInside)
+                btnAPI.layer.cornerRadius = 5
+                btnAPI.layer.masksToBounds = true
+                btnAPI.setTitleColor(UIColor.white, for: .normal)
+                btnAPI.setTitleColor(UIColor.systemBlue, for: .selected)
+                btnAPI.isEnabled = true
+                
+                _ = UIButton(type: .system)
+                if let hs1Color = UIColor(hex: "#198754") {
+                    btnAPI.backgroundColor = hs1Color
+                }
+               
+                
+                
+        //End read record Button
         
     }
     

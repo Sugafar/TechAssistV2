@@ -38,6 +38,7 @@ class Login:UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
+        title = "Technician Assistant"
         self.navigationController?.navigationBar.backgroundColor = UIColor.lightGray
         self.navigationController?.navigationBar.tintColor = UIColor.blue
        
@@ -48,8 +49,29 @@ class Login:UIViewController{
          tfUserPWD.tag = 2
         tfUserName.text = aUser.displayName
         
-       
+       alreadyHasLogin()
         setupUI()
+        
+    }
+    
+    func alreadyHasLogin(){
+        
+        do{
+            let someUser:DCUser = try dbm.readRecord()
+            
+            if(someUser.dcDoorId.count > 10) //we have a user
+            {
+                let nextScreenMenu = Menu()
+                
+                nextScreenMenu.title = "Menu"
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                    self.navigationController?.pushViewController(nextScreenMenu, animated: true)
+                })
+            }
+        }
+        catch{
+            
+        }
         
     }
     
@@ -219,18 +241,22 @@ class Login:UIViewController{
         
         //Begin the label
         //let lblTitle = UILabel()
-        lblTitle.text = "Technician Assistant Login"
+        lblTitle.numberOfLines = 0 // this turns the label into a multi line label
+        lblTitle.lineBreakMode = .byWordWrapping
+        lblTitle.text = "After logging in this App will remember you. You won't be asked to login again."
         lblTitle.textColor = UIColor.black
        // lblTitle.font = .systemFont(ofSize: 20)
-        lblTitle.font = .systemFont(ofSize: 26, weight: .medium)
+        lblTitle.font = .systemFont(ofSize: 18, weight: .medium)
         
         view.addSubview(lblTitle)
         
         lblTitle.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-        lblTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        lblTitle.topAnchor.constraint(equalTo: imageView.bottomAnchor,constant: 10)
+       // lblTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        lblTitle.topAnchor.constraint(equalTo: imageView.bottomAnchor,constant: 10),
+        lblTitle.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor,constant:20),
+        lblTitle.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 1, constant: -20)
         ])
         //end of lable
         
