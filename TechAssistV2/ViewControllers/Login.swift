@@ -77,6 +77,7 @@ class Login:UIViewController{
                     print("I have a user: \(aUser) ")
                     dbm.addRecord(usr: aUser)
                     let nextScreenMenu = Menu()
+                    
                     nextScreenMenu.title = "Menu"
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
                         self.navigationController?.pushViewController(nextScreenMenu, animated: true)

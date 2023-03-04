@@ -35,19 +35,19 @@ class DBManager{
     
     init(mydb:String){
         
-        do{
-            self.mydb = DBManager.databaseURL.absoluteString
-            db = try Connection(mydb)
-            
-        }
-        catch{
-            print("error with db connection on initilization")
-        }
+        //start
         
-        if (!FileManager.default.fileExists(atPath: mydb))
-        {
-            setupDB()
-        }
+       
+        
+        
+        //end
+        
+        
+        self.mydb = DBManager.databaseURL.absoluteString
+        db = try Connection(mydb)
+       
+        
+       
        
     }
     
@@ -77,7 +77,8 @@ class DBManager{
             let rowid = try db!.run(insert)
         }
         catch{
-            print("error adding record")
+            let errorMessage = error.localizedDescription
+            print("error adding record: \(errorMessage)")
         }
         
     }// end of add record func
@@ -106,8 +107,7 @@ class DBManager{
         
         do{
            
-            
-            let id = Expression<String>(usr.dcDoorId)
+                       let id = Expression<String>(usr.dcDoorId)
            
             let email = Expression<String>("email")
             
