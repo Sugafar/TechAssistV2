@@ -9,21 +9,20 @@
 /* Begin PBXBuildFile section */
 		05A4010929B3976F000F9945 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A4010829B3976F000F9945 /* AppDelegate.swift */; };
 		05A4010B29B3976F000F9945 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A4010A29B3976F000F9945 /* SceneDelegate.swift */; };
-		05A4010D29B3976F000F9945 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A4010C29B3976F000F9945 /* ViewController.swift */; };
-		05A4011029B3976F000F9945 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05A4010E29B3976F000F9945 /* Main.storyboard */; };
 		05A4011229B39772000F9945 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05A4011129B39772000F9945 /* Assets.xcassets */; };
 		05A4011529B39772000F9945 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05A4011329B39772000F9945 /* LaunchScreen.storyboard */; };
+		05A4012029B397E6000F9945 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A4011F29B397E6000F9945 /* Login.swift */; };
+		05A4012329B3980A000F9945 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 05A4012229B3980A000F9945 /* SQLite */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		05A4010529B3976F000F9945 /* TechAssistV2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TechAssistV2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05A4010829B3976F000F9945 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		05A4010A29B3976F000F9945 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		05A4010C29B3976F000F9945 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		05A4010F29B3976F000F9945 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		05A4011129B39772000F9945 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		05A4011429B39772000F9945 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		05A4011629B39772000F9945 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		05A4011F29B397E6000F9945 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +30,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05A4012329B3980A000F9945 /* SQLite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,15 +56,38 @@
 		05A4010729B3976F000F9945 /* TechAssistV2 */ = {
 			isa = PBXGroup;
 			children = (
+				05A4011E29B397CA000F9945 /* Models */,
+				05A4011D29B397B2000F9945 /* Data */,
+				05A4011C29B3979A000F9945 /* ViewControllers */,
 				05A4010829B3976F000F9945 /* AppDelegate.swift */,
 				05A4010A29B3976F000F9945 /* SceneDelegate.swift */,
-				05A4010C29B3976F000F9945 /* ViewController.swift */,
-				05A4010E29B3976F000F9945 /* Main.storyboard */,
 				05A4011129B39772000F9945 /* Assets.xcassets */,
 				05A4011329B39772000F9945 /* LaunchScreen.storyboard */,
 				05A4011629B39772000F9945 /* Info.plist */,
 			);
 			path = TechAssistV2;
+			sourceTree = "<group>";
+		};
+		05A4011C29B3979A000F9945 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				05A4011F29B397E6000F9945 /* Login.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		05A4011D29B397B2000F9945 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		05A4011E29B397CA000F9945 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +106,9 @@
 			dependencies = (
 			);
 			name = TechAssistV2;
+			packageProductDependencies = (
+				05A4012229B3980A000F9945 /* SQLite */,
+			);
 			productName = TechAssistV2;
 			productReference = 05A4010529B3976F000F9945 /* TechAssistV2.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +137,9 @@
 				Base,
 			);
 			mainGroup = 05A400FC29B3976F000F9945;
+			packageReferences = (
+				05A4012129B3980A000F9945 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+			);
 			productRefGroup = 05A4010629B3976F000F9945 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -127,7 +156,6 @@
 			files = (
 				05A4011529B39772000F9945 /* LaunchScreen.storyboard in Resources */,
 				05A4011229B39772000F9945 /* Assets.xcassets in Resources */,
-				05A4011029B3976F000F9945 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,23 +166,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05A4010D29B3976F000F9945 /* ViewController.swift in Sources */,
 				05A4010929B3976F000F9945 /* AppDelegate.swift in Sources */,
 				05A4010B29B3976F000F9945 /* SceneDelegate.swift in Sources */,
+				05A4012029B397E6000F9945 /* Login.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		05A4010E29B3976F000F9945 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				05A4010F29B3976F000F9945 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		05A4011329B39772000F9945 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -292,7 +312,6 @@
 				INFOPLIST_FILE = TechAssistV2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -320,7 +339,6 @@
 				INFOPLIST_FILE = TechAssistV2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -358,6 +376,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		05A4012129B3980A000F9945 /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		05A4012229B3980A000F9945 /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 05A4012129B3980A000F9945 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 05A400FD29B3976F000F9945 /* Project object */;
 }
