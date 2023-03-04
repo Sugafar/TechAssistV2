@@ -10,8 +10,8 @@ import UIKit
 class Menu:UIViewController{
     
     let lblTitle = UILabel()
-    var dbm = DBManager(mydb: "")
-    var aDBM = DBManager(mydb: "")
+    var dbm = DBManagerV2(mydb: "")
+   // var aDBM = DBManager(mydb: "")
     
     
     override func viewDidLoad() {

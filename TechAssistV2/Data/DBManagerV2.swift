@@ -1,14 +1,15 @@
 //
-//  DBManager.swift
+//  DBManagerV2.swift
 //  TechAssistV2
 //
 //  Created by Raf on 3/4/23.
 //
 
+
 import Foundation
 import SQLite
 
-class DBManager{
+class DBManagerV2{
     
     var db: Connection?
     
@@ -19,16 +20,10 @@ class DBManager{
     let displayName = Expression<String>("displayName")
    
     
-    static let databaseURL: URL = {
-          
-       // mine
-           guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-               fatalError("Could not access document directory")
-           }
-
-           // Add the database filename to the document directory path
-           return documentsDirectory.appendingPathComponent("db.sqlite3")
-      }()
+//    var databaseURL: URL = {
+//
+//        return (FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("db.sqlite3"))!
+//      }()
     //end of mine
     
     // this becomes the final path to the db
@@ -36,20 +31,37 @@ class DBManager{
     
     init(mydb:String){
         
-        
-        
-        do{
-            self.mydb = DBManager.databaseURL.absoluteString
-            
-           
-               db = try Connection(mydb)
-               setupDB()
-          }
-        catch{
-            print("error with db connection on initilization")
+        let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("db.emdb")
+
+        if FileManager.default.fileExists(atPath: fileURL!.path) {
+            do {
+                 db = try Connection(fileURL!.path)
+                print(" thinks it exista")
+                // Connection is now established to the existing database file
+            } catch {
+                // Handle error
+                print("Error: \(error.localizedDescription)")
+            }
+        } else {
+            do {
+                
+                print("thinks it does not exist")
+                db = try Connection(fileURL!.path)
+               // try db.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)")
+                setupDB()
+                // create a new "users" table in the database
+            } catch {
+                // Handle error
+                print("Error: \(error.localizedDescription)")
+            }
         }
-        var myPathString:String = String(self.mydb.dropFirst(7))
-        print("here's my string path: \(myPathString)")
+      
+
+
+
+
+
+
         
     }
     
@@ -127,3 +139,4 @@ class DBManager{
     }
     
 }
+

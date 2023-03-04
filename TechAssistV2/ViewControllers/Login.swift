@@ -25,7 +25,7 @@ class Login:UIViewController{
     let btnLogin = UIButton()
    
    
-    var dbm = DBManager(mydb: "")
+    var dbm = DBManagerV2(mydb: "")
     var aUser = DCUser()
     
     
