@@ -14,6 +14,7 @@
 		05A4012029B397E6000F9945 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A4011F29B397E6000F9945 /* Login.swift */; };
 		05A4012329B3980A000F9945 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 05A4012229B3980A000F9945 /* SQLite */; };
 		05A4012729B39A90000F9945 /* DCUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A4012629B39A90000F9945 /* DCUser.swift */; };
+		05A4012929B39AF2000F9945 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A4012829B39AF2000F9945 /* DBManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		05A4011629B39772000F9945 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05A4011F29B397E6000F9945 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		05A4012629B39A90000F9945 /* DCUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DCUser.swift; sourceTree = "<group>"; };
+		05A4012829B39AF2000F9945 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 		05A4011D29B397B2000F9945 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				05A4012829B39AF2000F9945 /* DBManager.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05A4012929B39AF2000F9945 /* DBManager.swift in Sources */,
 				05A4010929B3976F000F9945 /* AppDelegate.swift in Sources */,
 				05A4012729B39A90000F9945 /* DCUser.swift in Sources */,
 				05A4010B29B3976F000F9945 /* SceneDelegate.swift in Sources */,
