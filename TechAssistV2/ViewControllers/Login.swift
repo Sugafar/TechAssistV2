@@ -153,9 +153,12 @@ class Login:UIViewController{
                     print(parsingData)
                     completion(parsingData)
                 }catch {
+                    // jump over to main thread
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
                         self.btnLogin.isEnabled = true
                         self.spinner.stopAnimating()
+                        self.showAlert()
+                       
                     })
                     
                     print("Parsing Error")
@@ -165,6 +168,16 @@ class Login:UIViewController{
     dataTask.resume()
         
     }
+    
+    func showAlert() {
+        let alertController = UIAlertController(title: "kablooooey", message: "No login found.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction!) in
+                print("OK button tapped");
+            }
+        //alertController.view.backgroundColor = UIColor.gray.withAlphaComponent(0.2)
+            alertController.addAction(okAction)
+            self.present(alertController, animated: true, completion:nil)
+        }
     
     
     func fetchingAPIData(completion: @escaping (DCUser) ->Void){
@@ -355,26 +368,26 @@ class Login:UIViewController{
         
         //Begin Send button
             
-                view.addSubview(btnLogin)
+        view.addSubview(btnLogin)
         btnLogin.configuration = .tinted()
-                btnLogin.configuration?.image = UIImage(systemName: "checkmark.icloud.fill")
+        btnLogin.configuration?.image = UIImage(systemName: "checkmark.icloud.fill")
         btnLogin.configuration?.imagePadding = 6
         btnLogin.configuration?.imagePlacement = .leading
-               // btnLogin.backgroundColor = .systemGreen
-                btnLogin.titleLabel?.textColor = UIColor.black
-                //scanButton.titleLabel?.text = "Scan for PPC"
-                btnLogin.setTitle("Login", for: .normal)
-               
-                
-               
-                btnLogin.addTarget(self,action: #selector(sendItHome),for:.touchUpInside)
-                btnLogin.layer.cornerRadius = 5
-                btnLogin.layer.masksToBounds = true
-               // btnLogin.setTitleColor(UIColor.white, for: .normal)
-                btnLogin.setTitleColor(UIColor.systemBlue, for: .selected)
-                btnLogin.isEnabled = true
-      
-               
+        // btnLogin.backgroundColor = .systemGreen
+        btnLogin.titleLabel?.textColor = UIColor.black
+        //scanButton.titleLabel?.text = "Scan for PPC"
+        btnLogin.setTitle("Login", for: .normal)
+        
+        
+        
+        btnLogin.addTarget(self,action: #selector(sendItHome),for:.touchUpInside)
+        btnLogin.layer.cornerRadius = 5
+        btnLogin.layer.masksToBounds = true
+        // btnLogin.setTitleColor(UIColor.white, for: .normal)
+        btnLogin.setTitleColor(UIColor.systemBlue, for: .selected)
+        btnLogin.isEnabled = true
+        
+        
         btnLogin.translatesAutoresizingMaskIntoConstraints = false
         
         btnLogin.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
@@ -382,11 +395,11 @@ class Login:UIViewController{
         btnLogin.widthAnchor.constraint(equalToConstant: 200).isActive = true
         btnLogin.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
-                let button = UIButton(type: .system)
-                if let hs1Color = UIColor(hex: "#198754") {
-                    btnLogin.configuration?.baseBackgroundColor = hs1Color
-                    btnLogin.configuration?.baseForegroundColor = hs1Color
-                }
+        let button = UIButton(type: .system)
+        if let hs1Color = UIColor(hex: "#198754") {
+            btnLogin.configuration?.baseBackgroundColor = hs1Color
+            btnLogin.configuration?.baseForegroundColor = hs1Color
+        }
         
         //End Send Button
                 

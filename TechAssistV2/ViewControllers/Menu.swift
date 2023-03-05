@@ -34,9 +34,14 @@ class Menu:UIViewController{
         var myUser = DCUser()
         myUser = dbm.readRecord()
         lblTitle.text = "Logged in as " + myUser.displayName
+    }
+    
+    @objc func openTimeEntry(){
         
-        
-        
+        let nextScreen = TimeEntry()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            self.navigationController?.pushViewController(nextScreen, animated: true)
+        })
     }
     
     
@@ -106,35 +111,37 @@ class Menu:UIViewController{
         //end of lable
         
         //Begin Time Btn
-      
-            
-                view.addSubview(btnTime)
-                
-              
-               // btnTime.backgroundColor = .systemGreen
-                btnTime.titleLabel?.textColor = UIColor.black
-                //scanButton.titleLabel?.text = "Scan for PPC"
-                btnTime.setTitle("Enter Time", for: .normal)
-               
-                
-                btnTime.translatesAutoresizingMaskIntoConstraints = false
-                
-                btnTime.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
-                btnTime.topAnchor.constraint(equalTo:lblTitle.bottomAnchor,constant: 45).isActive = true
-                btnTime.widthAnchor.constraint(equalToConstant: 200).isActive = true
-                btnTime.heightAnchor.constraint(equalToConstant: 50).isActive = true
-               // btnTime.addTarget(self,action: #selector(addDBRecord),for:.touchUpInside)
-                btnTime.layer.cornerRadius = 5
-                btnTime.layer.masksToBounds = true
-                btnTime.setTitleColor(UIColor.white, for: .normal)
-                btnTime.setTitleColor(UIColor.systemBlue, for: .selected)
-                btnTime.isEnabled = true
-                
-                _ = UIButton(type: .system)
-                if let hs1Color = UIColor(hex: "#198754") {
-                    btnTime.backgroundColor = hs1Color
-                }
-               
+        
+        
+        view.addSubview(btnTime)
+        
+        btnTime.configuration = .tinted()
+        btnTime.configuration?.image = UIImage(systemName: "clock.fill")
+        btnTime.configuration?.imagePadding = 6
+        btnTime.configuration?.imagePlacement = .leading
+        
+        btnTime.titleLabel?.textColor = UIColor.black
+        btnTime.setTitle("Enter Time", for: .normal)
+        
+        
+        btnTime.translatesAutoresizingMaskIntoConstraints = false
+        btnTime.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
+        btnTime.topAnchor.constraint(equalTo:lblTitle.bottomAnchor,constant: 45).isActive = true
+        btnTime.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        btnTime.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        btnTime.addTarget(self,action: #selector(openTimeEntry),for:.touchUpInside)
+        btnTime.layer.cornerRadius = 5
+        btnTime.layer.masksToBounds = true
+        // btnTime.setTitleColor(UIColor.white, for: .normal)
+        btnTime.setTitleColor(UIColor.systemBlue, for: .selected)
+        btnTime.isEnabled = true
+        
+        _ = UIButton(type: .system)
+        if let hs1Color = UIColor(hex: "#198754") {
+            btnTime.configuration?.baseBackgroundColor = hs1Color
+            btnTime.configuration?.baseForegroundColor = hs1Color
+        }
+        
         //End time Button
         
         //Begin Proving button
