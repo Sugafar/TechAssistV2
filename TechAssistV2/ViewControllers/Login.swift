@@ -23,6 +23,7 @@ class Login:UIViewController{
     let lblUserPWD = UILabel()
     let tfUserPWD = UITextField()
     let btnLogin = UIButton()
+    var activityIndicator: UIActivityIndicatorView!
    
    
     var dbm = DBManagerV2(mydb: "")
@@ -30,7 +31,7 @@ class Login:UIViewController{
     
     
     
-    
+    var spinner = UIActivityIndicatorView(style: .large)
     
     
     
@@ -41,6 +42,8 @@ class Login:UIViewController{
         title = "Technician Assistant"
         self.navigationController?.navigationBar.backgroundColor = UIColor.lightGray
         self.navigationController?.navigationBar.tintColor = UIColor.blue
+        
+       
        
        
         tfUserName.delegate = self
@@ -78,8 +81,9 @@ class Login:UIViewController{
    
 
     
-    @objc func sendItHome(){
-        
+    @objc func sendItHome(sender:UIButton){
+        spinner.startAnimating()
+        sender.isEnabled = false
         var sendUser = DCUser()
         sendUser.userName = tfUserName.text ?? ""
         sendUser.userPWD = tfUserPWD.text ?? ""
@@ -92,7 +96,10 @@ class Login:UIViewController{
             // this will access the main thread
             DispatchQueue.main.async { [self] in
                 // Set the text field's text to the response
-                self.tfUserName.text = self.aUser.displayName
+                //self.tfUserName.text = self.aUser.displayName
+                
+                sender.isEnabled = true;
+                spinner.stopAnimating()
                 
                 if(self.aUser.displayName.count > 5) // we have a user
                 {
@@ -139,13 +146,17 @@ class Login:UIViewController{
              request.httpMethod = "PUT"
              request.setValue("application/json", forHTTPHeaderField: "Content-Type")
              request.httpBody = jsonData
-          let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
+        let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
             if (data != nil) && error == nil{
                 do {
                     let parsingData = try JSONDecoder().decode(DCUser.self, from: data!)
                     print(parsingData)
                     completion(parsingData)
                 }catch {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                        self.btnLogin.isEnabled = true
+                        self.spinner.stopAnimating()
+                    })
                     
                     print("Parsing Error")
                 }
@@ -345,37 +356,46 @@ class Login:UIViewController{
         //Begin Send button
             
                 view.addSubview(btnLogin)
-                
-              
+        btnLogin.configuration = .tinted()
+                btnLogin.configuration?.image = UIImage(systemName: "checkmark.icloud.fill")
+        btnLogin.configuration?.imagePadding = 6
+        btnLogin.configuration?.imagePlacement = .leading
                // btnLogin.backgroundColor = .systemGreen
                 btnLogin.titleLabel?.textColor = UIColor.black
                 //scanButton.titleLabel?.text = "Scan for PPC"
                 btnLogin.setTitle("Login", for: .normal)
                
                 
-                btnLogin.translatesAutoresizingMaskIntoConstraints = false
-                
-                btnLogin.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
-                btnLogin.topAnchor.constraint(equalTo:lblUserPWD.bottomAnchor,constant: 45).isActive = true
-                btnLogin.widthAnchor.constraint(equalToConstant: 200).isActive = true
-                btnLogin.heightAnchor.constraint(equalToConstant: 50).isActive = true
+               
                 btnLogin.addTarget(self,action: #selector(sendItHome),for:.touchUpInside)
                 btnLogin.layer.cornerRadius = 5
                 btnLogin.layer.masksToBounds = true
-                btnLogin.setTitleColor(UIColor.white, for: .normal)
+               // btnLogin.setTitleColor(UIColor.white, for: .normal)
                 btnLogin.setTitleColor(UIColor.systemBlue, for: .selected)
                 btnLogin.isEnabled = true
-                
+      
+               
+        btnLogin.translatesAutoresizingMaskIntoConstraints = false
+        
+        btnLogin.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
+        btnLogin.topAnchor.constraint(equalTo:lblUserPWD.bottomAnchor,constant: 45).isActive = true
+        btnLogin.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        btnLogin.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
                 let button = UIButton(type: .system)
                 if let hs1Color = UIColor(hex: "#198754") {
-                    btnLogin.backgroundColor = hs1Color
+                    btnLogin.configuration?.baseBackgroundColor = hs1Color
+                    btnLogin.configuration?.baseForegroundColor = hs1Color
                 }
-               
-                
-                
+        
         //End Send Button
                 
-        
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+               // spinner.startAnimating()
+                view.addSubview(spinner)
+
+                spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+                spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
     }
 }
