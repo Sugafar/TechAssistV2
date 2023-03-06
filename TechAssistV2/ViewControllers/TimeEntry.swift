@@ -10,11 +10,14 @@ import UIKit
 class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     
     let btnTimePU = UIButton()
+    let btnSaveTime = UIButton()
     let btnDate = UIButton()
+    let lblMyDay = PaddingLabel()
     var popUpWindow: PopUpWindow!
    // var popUpCalendar: PopUpCalendar!
     var pickerView: UIPickerView!
     var datePicker: UIDatePicker!
+    //var mySubView: UIView!
 
         let column1Options = ["1", "2", "3","4","5","6","7","8","9","10","11","12","13","14"]
     let column2Options = [":00",":15", ":30", ":45"]
@@ -28,6 +31,9 @@ class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
         self.navigationController?.navigationBar.backgroundColor = UIColor.lightGray
         self.navigationController?.navigationBar.tintColor = UIColor.blue
         title = "Time Entry"
+        
+       // mySubView = UIView()
+        
         
         datePicker = UIDatePicker()
         pickerView = UIPickerView()
@@ -194,9 +200,22 @@ class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
             
         ])
         
-        //Begin Time Btn
+        // datePicker constraints
+        view.addSubview(datePicker)
+        
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            datePicker.heightAnchor.constraint(greaterThanOrEqualToConstant: 67),
+            datePicker.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
+            datePicker.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+           // datePicker.trailingAnchor.constraint(equalTo: popupView.trailingAnchor, constant: -15),
+            //datePicker.bottomAnchor.constraint(equalTo: popupButton.topAnchor, constant: -8)
+            ])
+
+        // end of date picker
         
         
+        //Begin Time Btn Popup
         view.addSubview(btnTimePU)
         
         btnTimePU.configuration = .tinted()
@@ -210,7 +229,7 @@ class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
         
         btnTimePU.translatesAutoresizingMaskIntoConstraints = false
         btnTimePU.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-        btnTimePU.topAnchor.constraint(equalTo:imageView.bottomAnchor,constant: 10).isActive = true
+        btnTimePU.topAnchor.constraint(equalTo:datePicker.bottomAnchor,constant: 10).isActive = true
         btnTimePU.widthAnchor.constraint(equalToConstant: 50).isActive = true
         btnTimePU.heightAnchor.constraint(equalToConstant: 50).isActive = true
         btnTimePU.addTarget(self,action: #selector(popUpButtonAction),for:.touchUpInside)
@@ -227,28 +246,11 @@ class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
             btnTimePU.configuration?.baseForegroundColor = hs1Color
         }
         
-        //End time Button
-        
-        //Begin Date Btn
-              
-              
-        // datePicker constraints
-        view.addSubview(datePicker)
-        
-        datePicker.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            datePicker.heightAnchor.constraint(greaterThanOrEqualToConstant: 67),
-            datePicker.topAnchor.constraint(equalTo: btnTimePU.bottomAnchor, constant: 1),
-            datePicker.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
-           // datePicker.trailingAnchor.constraint(equalTo: popupView.trailingAnchor, constant: -15),
-            //datePicker.bottomAnchor.constraint(equalTo: popupButton.topAnchor, constant: -8)
-            ])
-
-        
+        //End time popup Button
         
        
         
-        
+        //Begin picker
         view.addSubview(pickerView)
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -257,9 +259,9 @@ class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
         pickerView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            pickerView.leadingAnchor.constraint(equalTo: btnTimePU.trailingAnchor,constant: 75),
-            pickerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 35),
-            pickerView.widthAnchor.constraint(equalToConstant: 110),
+            pickerView.leadingAnchor.constraint(equalTo: btnTimePU.trailingAnchor,constant: 30),
+            pickerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 90),
+            pickerView.widthAnchor.constraint(equalToConstant: 140),
             pickerView.heightAnchor.constraint(equalToConstant: 150),
              //contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
 
@@ -267,6 +269,79 @@ class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
         pickerView.layer.zPosition = 0
         
        
+        //Begin btn save time
+                view.addSubview(btnSaveTime)
+                
+                btnSaveTime.configuration = .tinted()
+                btnSaveTime.configuration?.image = UIImage(systemName: "checkmark.seal.fill")
+                btnSaveTime.configuration?.imagePadding = 6
+                btnSaveTime.configuration?.imagePlacement = .leading
+                
+                btnSaveTime.titleLabel?.textColor = UIColor.black
+               // btnSaveTime.setTitle("Help", for: .normal)
+                
+                
+                btnSaveTime.translatesAutoresizingMaskIntoConstraints = false
+                btnSaveTime.leadingAnchor.constraint(equalTo: pickerView.trailingAnchor,constant: 20).isActive = true
+        btnSaveTime.topAnchor.constraint(equalTo:btnTimePU.topAnchor).isActive = true
+                btnSaveTime.widthAnchor.constraint(equalToConstant: 50).isActive = true
+                btnSaveTime.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                btnSaveTime.addTarget(self,action: #selector(popUpButtonAction),for:.touchUpInside)
+                btnSaveTime.layer.cornerRadius = 5
+                btnSaveTime.layer.masksToBounds = true
+                // btnSaveTime.setTitleColor(UIColor.white, for: .normal)
+                btnSaveTime.setTitleColor(UIColor.systemBlue, for: .selected)
+                btnSaveTime.isEnabled = true
+                btnSaveTime.layer.zPosition = 1
+                
+                _ = UIButton(type: .system)
+                if let hs1Color = UIColor(hex: "#198754") {
+                    btnSaveTime.configuration?.baseBackgroundColor = hs1Color
+                    btnSaveTime.configuration?.baseForegroundColor = hs1Color
+                }
+                
+                //End btn save time
         
+        //Begin the MyDay label
+        view.addSubview(lblMyDay)
+              lblMyDay.numberOfLines = 0 // this turns the label into a multi line label
+              lblMyDay.lineBreakMode = .byWordWrapping
+              lblMyDay.text = "After logging in this App will remember you. You won't be asked to login again."
+              lblMyDay.textColor = UIColor.black
+             // lblMyDay.font = .systemFont(ofSize: 20)
+        lblMyDay.layer.borderWidth = 1.0
+        lblMyDay.layer.borderColor = UIColor.black.cgColor
+        lblMyDay.layer.cornerRadius = 5.0 // Optional: To add rounded corners
+
+              lblMyDay.font = .systemFont(ofSize: 18, weight: .medium)
+
+
+
+              lblMyDay.translatesAutoresizingMaskIntoConstraints = false
+
+              NSLayoutConstraint.activate([
+             // lblMyDay.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+              lblMyDay.topAnchor.constraint(equalTo: pickerView.bottomAnchor,constant: 10),
+              lblMyDay.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor,constant:20),
+              lblMyDay.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 1, constant: -20)
+              ])
+              //end of lblMyDay
+        
+        
+      
+    }
+}
+
+class PaddingLabel: UILabel {
+    let padding = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: rect.inset(by: padding))
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        let size = super.intrinsicContentSize
+        return CGSize(width: size.width + padding.left + padding.right,
+                      height: size.height + padding.top + padding.bottom)
     }
 }
