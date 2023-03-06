@@ -9,16 +9,26 @@ import UIKit
 
 class TimeEntry:UIViewController{
     
+    let btnTimePU = UIButton()
+    var popUpWindow: PopUpWindow!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         self.navigationController?.navigationBar.backgroundColor = UIColor.lightGray
         self.navigationController?.navigationBar.tintColor = UIColor.blue
         title = "Time Entry"
+        
         setupUI()
         
     }
     
+   @objc func popUpButtonAction(_ sender: UIButton) {
+        
+        popUpWindow = PopUpWindow(title: "Error", text: "Sorry, that email address is already used!", buttontext: "OK")
+        self.present(popUpWindow, animated: true, completion: nil)
+       popUpWindow.popUpWindowView.popupTitle.text = "Hello from down here"
+    }
     
     func setupUI(){
         
@@ -69,6 +79,39 @@ class TimeEntry:UIViewController{
         ])
         
         
+        //Begin Time Btn
+        
+        
+        view.addSubview(btnTimePU)
+        
+        btnTimePU.configuration = .tinted()
+        btnTimePU.configuration?.image = UIImage(systemName: "clock.fill")
+        btnTimePU.configuration?.imagePadding = 6
+        btnTimePU.configuration?.imagePlacement = .leading
+        
+        btnTimePU.titleLabel?.textColor = UIColor.black
+        btnTimePU.setTitle("Enter Time", for: .normal)
+        
+        
+        btnTimePU.translatesAutoresizingMaskIntoConstraints = false
+        btnTimePU.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
+        btnTimePU.topAnchor.constraint(equalTo:imageView.bottomAnchor,constant: 45).isActive = true
+        btnTimePU.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        btnTimePU.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        btnTimePU.addTarget(self,action: #selector(popUpButtonAction),for:.touchUpInside)
+        btnTimePU.layer.cornerRadius = 5
+        btnTimePU.layer.masksToBounds = true
+        // btnTimePU.setTitleColor(UIColor.white, for: .normal)
+        btnTimePU.setTitleColor(UIColor.systemBlue, for: .selected)
+        btnTimePU.isEnabled = true
+        
+        _ = UIButton(type: .system)
+        if let hs1Color = UIColor(hex: "#198754") {
+            btnTimePU.configuration?.baseBackgroundColor = hs1Color
+            btnTimePU.configuration?.baseForegroundColor = hs1Color
+        }
+        
+        //End time Button
         
         
     }
