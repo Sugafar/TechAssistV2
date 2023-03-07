@@ -24,6 +24,7 @@ class Login:UIViewController{
     let tfUserPWD = UITextField()
     let btnLogin = UIButton()
     var activityIndicator: UIActivityIndicatorView!
+  
    
    
     var dbm = DBManagerV2(mydb: "")
@@ -42,6 +43,9 @@ class Login:UIViewController{
         title = "Technician Assistant"
         self.navigationController?.navigationBar.backgroundColor = UIColor.lightGray
         self.navigationController?.navigationBar.tintColor = UIColor.blue
+        
+      
+
         
        
        

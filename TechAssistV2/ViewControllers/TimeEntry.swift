@@ -13,17 +13,21 @@ class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     let btnSaveTime = UIButton()
     let btnDate = UIButton()
     let lblMyDay = PaddingLabel()
+    let lblBuild = UILabel()
+    let lblWorkDate = UILabel()
+    var lastEntry:String = "Init"
     var popUpWindow: PopUpWindow!
    // var popUpCalendar: PopUpCalendar!
     var pickerView: UIPickerView!
     var datePicker: UIDatePicker!
+    var netScreenWidth: CGFloat = 0.0
     //var mySubView: UIView!
 
-        let column1Options = ["1", "2", "3","4","5","6","7","8","9","10","11","12","13","14"]
-    let column2Options = [":00",":15", ":30", ":45"]
+        let column1Options = ["","1", "2", "3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"]
+    let column2Options = [" ",":00",":15", ":30", ":45"]
     let column1Heading = "Hour"
         let column2Heading = "Min"
-    let columnHeadingFont = UIFont.boldSystemFont(ofSize: 12)
+    let columnHeadingFont = UIFont.boldSystemFont(ofSize: 18)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +36,15 @@ class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
         self.navigationController?.navigationBar.tintColor = UIColor.blue
         title = "Time Entry"
         
-       // mySubView = UIView()
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            let safeAreaInsets = windowScene.windows.first?.safeAreaInsets ?? UIEdgeInsets.zero
+            netScreenWidth = UIScreen.main.bounds.width - safeAreaInsets.left - safeAreaInsets.right
+        }
+        //subtract out the width of the 2 buttons and the picker to leave netScreenWidth for spacing ie: 50 + 50 + 140
+        netScreenWidth = netScreenWidth - 240
         
+      
+        lblMyDay.text = ""
         
         datePicker = UIDatePicker()
         pickerView = UIPickerView()
@@ -62,6 +73,16 @@ class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
         // kludgy code to get the calendar to dismiss
         self.datePicker.preferredDatePickerStyle = .wheels
         self.datePicker.preferredDatePickerStyle = .automatic
+       
+        
+    }
+    
+    func justDate (aDate:Date)->String{
+        
+        let dateformatter = DateFormatter()
+       
+        dateformatter.dateFormat = "MM.dd.yyyy"
+        return  dateformatter.string(from: aDate)
         
     }
     
@@ -133,6 +154,28 @@ class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
 
     //End the picker
     
+    @objc func getTime(){
+        
+        var myStringTime:String = column1Options[pickerView.selectedRow(inComponent: 0)] + column2Options[pickerView.selectedRow(inComponent:1 )]
+        
+        if(lastEntry == "Init" || lastEntry == "End")
+        {
+            if(lblMyDay.text == "")
+            {
+                lblMyDay.text! = "Start: " + myStringTime
+            }
+            else{
+                lblMyDay.text! += "Start: " + myStringTime
+            }
+            lastEntry = "Start"
+        }
+        else{
+            lblMyDay.text! += " End: " + myStringTime + "\n"
+            lastEntry = "End"
+        }
+        
+    }
+    
    @objc func popUpButtonAction(_ sender: UIButton) {
         
         popUpWindow = PopUpWindow(title: "Time Entry Help", text: "Time Entry Help", buttontext: "OK")
@@ -200,6 +243,8 @@ class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
             
         ])
         
+        
+        
         // datePicker constraints
         view.addSubview(datePicker)
         
@@ -213,6 +258,28 @@ class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
             ])
 
         // end of date picker
+        
+        //let lblWorkDate = UILabel()
+              view.addSubview(lblWorkDate)
+              
+                     lblWorkDate.numberOfLines = 0 // this turns the label into a multi line label
+                     lblWorkDate.lineBreakMode = .byWordWrapping
+                     lblWorkDate.text = "Work Date"
+                     lblWorkDate.textColor = UIColor.black
+                    // lblWorkDate.font = .systemFont(ofSize: 20)
+                     lblWorkDate.font = .systemFont(ofSize: 12, weight: .medium)
+                     
+                     view.addSubview(lblWorkDate)
+                     
+                     lblWorkDate.translatesAutoresizingMaskIntoConstraints = false
+                     
+                     NSLayoutConstraint.activate([
+                    // lblWorkDate.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                     lblWorkDate.bottomAnchor.constraint(equalTo: datePicker.topAnchor,constant: 18),
+                     lblWorkDate.leadingAnchor.constraint(equalTo: datePicker.leadingAnchor,constant: 10),
+                     lblWorkDate.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 1, constant: -20)
+                     ])
+                     //end of lable
         
         
         //Begin Time Btn Popup
@@ -259,7 +326,7 @@ class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
         pickerView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            pickerView.leadingAnchor.constraint(equalTo: btnTimePU.trailingAnchor,constant: 30),
+            pickerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             pickerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 90),
             pickerView.widthAnchor.constraint(equalToConstant: 140),
             pickerView.heightAnchor.constraint(equalToConstant: 150),
@@ -282,11 +349,11 @@ class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
                 
                 
                 btnSaveTime.translatesAutoresizingMaskIntoConstraints = false
-                btnSaveTime.leadingAnchor.constraint(equalTo: pickerView.trailingAnchor,constant: 20).isActive = true
-        btnSaveTime.topAnchor.constraint(equalTo:btnTimePU.topAnchor).isActive = true
+        btnSaveTime.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
+                btnSaveTime.topAnchor.constraint(equalTo:btnTimePU.topAnchor).isActive = true
                 btnSaveTime.widthAnchor.constraint(equalToConstant: 50).isActive = true
                 btnSaveTime.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                btnSaveTime.addTarget(self,action: #selector(popUpButtonAction),for:.touchUpInside)
+                btnSaveTime.addTarget(self,action: #selector(getTime),for:.touchUpInside)
                 btnSaveTime.layer.cornerRadius = 5
                 btnSaveTime.layer.masksToBounds = true
                 // btnSaveTime.setTitleColor(UIColor.white, for: .normal)
@@ -304,28 +371,50 @@ class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
         
         //Begin the MyDay label
         view.addSubview(lblMyDay)
-              lblMyDay.numberOfLines = 0 // this turns the label into a multi line label
-              lblMyDay.lineBreakMode = .byWordWrapping
-              lblMyDay.text = "After logging in this App will remember you. You won't be asked to login again."
-              lblMyDay.textColor = UIColor.black
-             // lblMyDay.font = .systemFont(ofSize: 20)
-        lblMyDay.layer.borderWidth = 1.0
-        lblMyDay.layer.borderColor = UIColor.black.cgColor
-        lblMyDay.layer.cornerRadius = 5.0 // Optional: To add rounded corners
-
-              lblMyDay.font = .systemFont(ofSize: 18, weight: .medium)
-
-
-
-              lblMyDay.translatesAutoresizingMaskIntoConstraints = false
-
-              NSLayoutConstraint.activate([
-             // lblMyDay.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-              lblMyDay.topAnchor.constraint(equalTo: pickerView.bottomAnchor,constant: 10),
-              lblMyDay.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor,constant:20),
-              lblMyDay.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 1, constant: -20)
-              ])
-              //end of lblMyDay
+        lblMyDay.numberOfLines = 0
+        lblMyDay.textColor = UIColor.black
+        lblMyDay.layer.borderWidth = 3.0
+        lblMyDay.layer.borderColor = UIColor(hex: "#198754")?.cgColor
+        lblMyDay.layer.cornerRadius = 19.0 // Optional: To add rounded corners
+        
+        lblMyDay.font = .systemFont(ofSize: 18, weight: .medium)
+        
+        
+        
+        lblMyDay.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            // lblMyDay.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            lblMyDay.topAnchor.constraint(equalTo: pickerView.bottomAnchor,constant: 10),
+            lblMyDay.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor,constant:2),
+            lblMyDay.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 1, constant: -2)
+        ])
+        
+        
+        //end of lblMyDay
+        
+        //Begin the label build
+               //let lblBuild = UILabel()
+        view.addSubview(lblBuild)
+        
+               lblBuild.numberOfLines = 0 // this turns the label into a multi line label
+               lblBuild.lineBreakMode = .byWordWrapping
+               lblBuild.text = "Build my day results"
+               lblBuild.textColor = UIColor.black
+              // lblBuild.font = .systemFont(ofSize: 20)
+               lblBuild.font = .systemFont(ofSize: 12, weight: .medium)
+               
+               view.addSubview(lblBuild)
+               
+               lblBuild.translatesAutoresizingMaskIntoConstraints = false
+               
+               NSLayoutConstraint.activate([
+              // lblBuild.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+               lblBuild.bottomAnchor.constraint(equalTo: lblMyDay.topAnchor,constant: 1),
+               lblBuild.leadingAnchor.constraint(equalTo: lblMyDay.leadingAnchor,constant: 10),
+               lblBuild.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 1, constant: -20)
+               ])
+               //end of lable
         
         
       
@@ -345,3 +434,21 @@ class PaddingLabel: UILabel {
                       height: size.height + padding.top + padding.bottom)
     }
 }
+
+//extension UIColor {
+//    convenience init(hex: String) {
+//        let scanner = Scanner(string: hex)
+//        scanner.scanLocation = 0
+//
+//        var rgbValue: UInt64 = 0
+//
+//        scanner.scanHexInt64(&rgbValue)
+//
+//        let r = (rgbValue & 0xff0000) >> 16
+//        let g = (rgbValue & 0xff00) >> 8
+//        let b = rgbValue & 0xff
+//
+//        self.init(red: CGFloat(r) / 0xff, green: CGFloat(g) / 0xff, blue: CGFloat(b) / 0xff, alpha: 1)
+//    }
+//}
+
