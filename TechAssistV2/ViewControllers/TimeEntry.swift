@@ -227,6 +227,7 @@ class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
 
         let dateFormatter2 = DateFormatter()
         dateFormatter2.dateFormat = "MM/dd/yyyy"
+       // dateFormatter2.timeZone = TimeZone(identifier: "America/Chicago")
         let myDay = (dateFormatter2.string(from:datePicker.date))
         let dateString = "\(myDay) \(myHour)\(myMinute)"
         print("elon's date: \(dateString)")
@@ -235,21 +236,21 @@ class TimeEntry:UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
            // dateFormatter2.dateFormat = "MM/dd/yyyy hh:mm"
             let formattedDateString = dateFormatter2.string(from: eDate)
             print(formattedDateString)
-//        } else {
-//            print("Invalid date format")
-//        }
-        
-        //end of example
-        
+      
+//        //convert to Central Time
+       dateFormatter2.timeZone = TimeZone(identifier: "America/Chicago")
+        let centralTime = dateFormatter2.date(from:dateString)
+//        print(centralTime)
+//        
         // clean out the : from the last min
         let myLastMin = String(newMin.filter { !":".contains($0) })
         
         //veify that the last time entered is less than the current entry
         print("last Time: \(lastDateTimeEntered)")
         print("new Time: \(eDate)")
-        if(lastDateTimeEntered <= eDate )// it's a valid entry as it's equal to or greater than the last time entered
+        if(lastDateTimeEntered <= centralTime!)// it's a valid entry as it's equal to or greater than the last time entered
         {
-            lastDateTimeEntered = eDate // lastDateTimeEntered becomes the current entry
+            lastDateTimeEntered = centralTime!// lastDateTimeEntered becomes the current entry
             print("lastDateTimeEntered after update: \(lastDateTimeEntered)")
             return true
 
